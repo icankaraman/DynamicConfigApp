@@ -1,6 +1,6 @@
 ﻿using ConfigLibrary.Lib.Services;
 
-namespace ServiceA
+namespace ServiceB
 {
     public class Startup
     {
@@ -12,7 +12,7 @@ namespace ServiceA
 
         public async void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(s => new ConfigurationService("SERVICEA", "mongodb://localhost:27017",20000));
+            services.AddSingleton(s => new ConfigurationService("SERVICEB", "mongodb://localhost:27017", 30000));
         }
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {

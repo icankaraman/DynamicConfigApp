@@ -21,9 +21,9 @@ namespace ConfigLibraryApiService.Controllers
             return Ok(await _configService.GetAllAsync());
         }
         [HttpGet("{appName}")]
-        public async Task<IActionResult> GetByAppName(string appName)
+        public async Task<IActionResult> GetByAppName(string appName, string appVariable)
         {
-            var config = await _configService.GetByAppNameAsync(appName);
+            var config = await _configService.GetByAppNameAsync(appName, appVariable);
             if (config == null)
             {
                 return NotFound();
@@ -41,25 +41,25 @@ namespace ConfigLibraryApiService.Controllers
             return Ok(configData.Id);
         }
         [HttpPut("{appName}")]
-        public async Task<IActionResult> Update(string appName, ConfigParameterModel configData)
+        public async Task<IActionResult> Update(string appName, string appVariable, ConfigParameterModel configData)
         {
-            var config = await _configService.GetByAppNameAsync(appName);
+            var config = await _configService.GetByAppNameAsync(appName, appVariable);
             if (config == null)
             {
                 return NotFound();
             }
-            await _configService.UpdateAsync(appName, configData);
+            await _configService.UpdateAsync(appName, appVariable, configData);
             return NoContent();
         }
         [HttpDelete("{appName}")]
-        public async Task<IActionResult> Delete(string appName)
+        public async Task<IActionResult> Delete(string appName, string appVariable)
         {
-            var config = await _configService.GetByAppNameAsync(appName);
+            var config = await _configService.GetByAppNameAsync(appName, appVariable);
             if (config == null)
             {
                 return NotFound();
             }
-            await _configService.DeleteAsync(config.ApplicationName.ToString());
+            await _configService.DeleteAsync(config.ApplicationName.ToString(), appVariable);
             return NoContent();
         }
     }

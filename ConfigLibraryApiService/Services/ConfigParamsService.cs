@@ -23,14 +23,14 @@ namespace ConfigLibraryApiService.Services
             return config;
         }
 
-        public async Task DeleteAsync(string appName)
+        public async Task DeleteAsync(string appName, string appVariable)
         {
-            var collec = await _collection.Find(c => c.ApplicationName.Equals(appName) && c.IsActive == true).FirstOrDefaultAsync();
+            var collec = await _collection.Find(c => c.ApplicationName.Equals(appName) && c.Name.Equals(appVariable) && c.IsActive == true).FirstOrDefaultAsync();
             if (collec != null)
             {
                collec.IsActive = false;
             }
-            await UpdateAsync(appName,collec);
+            await UpdateAsync(appName,appVariable,collec);
         }
 
         public async Task<List<ConfigParameterModel>> GetAllAsync()
@@ -38,14 +38,14 @@ namespace ConfigLibraryApiService.Services
             return await _collection.Find(c => c.IsActive == true).ToListAsync();
         }
 
-        public async Task<ConfigParameterModel> GetByAppNameAsync(string appName)
+        public async Task<ConfigParameterModel> GetByAppNameAsync(string appName, string appVariable)
         {
-            return await _collection.Find<ConfigParameterModel>(c => c.ApplicationName == appName && c.IsActive == true).FirstOrDefaultAsync();
+            return await _collection.Find<ConfigParameterModel>(c => c.ApplicationName == appName && c.Name.Equals(appVariable) && c.IsActive == true).FirstOrDefaultAsync();
         }
 
-        public async Task UpdateAsync(string appName, ConfigParameterModel config)
+        public async Task UpdateAsync(string appName, string appVariable, ConfigParameterModel config)
         {
-            await _collection.ReplaceOneAsync(c => c.ApplicationName.Equals(appName) && c.IsActive == true, config);
+            await _collection.ReplaceOneAsync(c => c.ApplicationName.Equals(appName) && c.Name.Equals(appVariable) && c.IsActive == true, config);
         }
     }
 }
