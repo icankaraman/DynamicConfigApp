@@ -27,7 +27,7 @@ namespace ConfigLibrary.Models.Enums
         [Description("Float")]
         Float = 5,
 
-        [Description("Integer")]
+        [Description("Int32")]
         Int = 6,
 
         [Description("Long")]

@@ -8,6 +8,7 @@ namespace ConfigLibrary.Lib.Services
 {
     public interface IConfigurationService
     {
-        Task<T> GetValue<T>(string key);
+        T GetValue<T>(string key);
+        
     }
 }
